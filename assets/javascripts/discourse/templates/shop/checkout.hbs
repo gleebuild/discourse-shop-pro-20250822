@@ -1,0 +1,39 @@
+<div class="shop-checkout">
+  <h2>下单信息</h2>
+  <div class="summary">
+    {{#if this.loading}}
+      <p>Loading...</p>
+    {{else}}
+      <div class="line">商品：{{this.product.name}}</div>
+      <div class="line">价格：{{format-number this.product.price_cents style="currency" currency=this.product.currency}}</div>
+    {{/if}}
+  </div>
+
+  <div class="address-form">
+    <label>收件人<input type="text" {{on "input" (fn this.setField "name")}}></label>
+    <label>电话<input type="text" {{on "input" (fn this.setField "phone")}}></label>
+    <label>国家<input type="text" {{on "input" (fn this.setField "country")}}></label>
+    <label>省份<input type="text" {{on "input" (fn this.setField "province")}}></label>
+    <label>城市<input type="text" {{on "input" (fn this.setField "city")}}></label>
+    <label>地址<input type="text" {{on "input" (fn this.setField "address")}}></label>
+    <label>邮编（选填）<input type="text" {{on "input" (fn this.setField "zip")}}></label>
+  </div>
+
+  <div class="coupon">
+    <label>优惠券码<input type="text" {{on "input" (fn this.setCoupon)}}></label>
+    <button class="btn" {{on "click" this.applyCoupon}}>应用</button>
+  </div>
+
+  <div class="totals">
+    <div>小计：{{format-number this.subtotal style="currency" currency=this.currency}}</div>
+    <div>优惠：-{{format-number this.discount style="currency" currency=this.currency}}</div>
+    <div>合计：<b>{{format-number this.total style="currency" currency=this.currency}}</b></div>
+  </div>
+
+  <div class="payment">
+    <label><input type="radio" name="pm" value="wechat" checked={{eq this.paymentMethod "wechat"}} {{on "change" this.setPM}}> 微信支付</label>
+    <label><input type="radio" name="pm" value="paypal" checked={{eq this.paymentMethod "paypal"}} {{on "change" this.setPM}}> PayPal</label>
+  </div>
+
+  <button class="btn btn-primary" {{on "click" this.placeOrder}}>立即支付</button>
+</div>
